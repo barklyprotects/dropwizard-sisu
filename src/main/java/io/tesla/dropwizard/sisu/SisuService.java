@@ -86,7 +86,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addManaged(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Managed> managedBeanEntry : locator.locate(Key.get(Managed.class))) {
       Managed managed = managedBeanEntry.getValue();
-      environment.manage(managedBeanEntry.getValue());
+      environment.manage(managed);
       logger.info("Added managed: " + managed);
     }
   }
@@ -94,7 +94,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addTasks(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Task> taskBeanEntry : locator.locate(Key.get(Task.class))) {
       Task task = taskBeanEntry.getValue();
-      environment.addTask(taskBeanEntry.getValue());
+      environment.addTask(task);
       logger.info("Added task: " + task);
     }
   }
@@ -102,7 +102,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addHealthChecks(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, HealthCheck> healthCheckBeanEntry : locator.locate(Key.get(HealthCheck.class))) {
       HealthCheck healthCheck = healthCheckBeanEntry.getValue();
-      environment.addHealthCheck(healthCheckBeanEntry.getValue());
+      environment.addHealthCheck(healthCheck);
       logger.info("Added healthCheck: " + healthCheck);
     }
   }
@@ -111,7 +111,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addInjectableProviders(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, InjectableProvider> injectableProviderBeanEntry : locator.locate(Key.get(InjectableProvider.class))) {
       InjectableProvider injectableProvider = injectableProviderBeanEntry.getValue();
-      environment.addProvider(injectableProviderBeanEntry.getValue());
+      environment.addProvider(injectableProvider);
       logger.info("Added injectableProvider: " + injectableProvider);
     }
   }
@@ -119,7 +119,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addProviders(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Provider> providerBeanEntry : locator.locate(Key.get(Provider.class))) {
       Provider provider = providerBeanEntry.getValue();
-      environment.addProvider(providerBeanEntry.getValue());
+      environment.addProvider(provider);
       logger.info("Added provider class: " + provider);
     }
   }
