@@ -129,9 +129,10 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
     // This is probably not the most efficient way to collect all classes annotated with Path.class
     //
     for (BeanEntry<Annotation, Object> resourceBeanEntry : locator.locate(Key.get(Object.class))) {
-      Object resource = resourceBeanEntry.getValue();
-      if (resource.getClass().getAnnotation(Path.class) != null) {
-        environment.addResource(resourceBeanEntry.getValue());
+      Class<?> impl = resourceBeanEntry.getImplementationClass();
+      if (impl != null && impl.isAnnotationPresent(Path.class)) {
+        Object resource = resourceBeanEntry.getValue();
+        environment.addResource(resource);
         logger.info("Added resource class: " + resource);        
       }
     }
