@@ -19,6 +19,7 @@ import org.eclipse.sisu.reflect.URLClassSpace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -41,18 +42,25 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   }
 
   @Override
-  public void run(T configuration, Environment environment) throws Exception {
-    Injector injector = createInjector(configuration);
+  public void run(T configuration, Environment environment)
+      throws Exception {
+    Injector injector = createInjector(configuration, environment);
     injector.injectMembers(this);
     runWithInjector(configuration, environment, injector);
   }
 
-  private Injector createInjector(T configuration) {
+  private Injector createInjector(final T configuration, final Environment environment) {
     ClassSpace space = new URLClassSpace(getClass().getClassLoader());
     SpaceModule spaceModule = new SpaceModule(space, BeanScanning.CACHE);
     List<Module> modules = new ArrayList<Module>();
     modules.add(spaceModule);
-    for(Module m : modules(configuration)) {
+    modules.add(new Module() {
+      public void configure(Binder binder) {
+        binder.bind(Environment.class).toInstance(environment);
+      }
+    });
+
+    for (Module m : modules(configuration)) {
       System.out.println("Adding " + m);
       modules.add(m);
     }
@@ -63,13 +71,14 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   // Allow the application to customize the modules
   //
   protected Module[] modules(T configuration) {
-    return new Module[]{};
+    return new Module[] {};
   }
-  
-  protected void customize(T configuration, Environment environment) {    
+
+  protected void customize(T configuration, Environment environment) {
   }
-  
-  private void runWithInjector(T configuration, Environment environment, Injector injector) throws Exception {
+
+  private void runWithInjector(T configuration, Environment environment, Injector injector)
+      throws Exception {
     //
     // Allow customization of the environment
     //
@@ -133,7 +142,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
       if (impl != null && impl.isAnnotationPresent(Path.class)) {
         Object resource = resourceBeanEntry.getValue();
         environment.addResource(resource);
-        logger.info("Added resource class: " + resource);        
+        logger.info("Added resource class: " + resource);
       }
     }
   }
