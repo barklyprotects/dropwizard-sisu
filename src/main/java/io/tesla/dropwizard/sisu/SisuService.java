@@ -2,8 +2,6 @@ package io.tesla.dropwizard.sisu;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.Path;
