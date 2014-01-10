@@ -8,12 +8,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
 
 import org.eclipse.sisu.BeanEntry;
-import org.eclipse.sisu.BeanScanning;
-import org.eclipse.sisu.binders.SpaceModule;
-import org.eclipse.sisu.binders.WireModule;
-import org.eclipse.sisu.locators.BeanLocator;
-import org.eclipse.sisu.reflect.ClassSpace;
-import org.eclipse.sisu.reflect.URLClassSpace;
+import org.eclipse.sisu.inject.BeanLocator;
+import org.eclipse.sisu.space.BeanScanning;
+import org.eclipse.sisu.space.ClassSpace;
+import org.eclipse.sisu.space.SpaceModule;
+import org.eclipse.sisu.space.URLClassSpace;
+import org.eclipse.sisu.wire.WireModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
