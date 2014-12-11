@@ -1,6 +1,6 @@
-package io.tesla.dropwizard.sisu.common.resources;
+package com.cylentsystems.dropwizard.sisu.guice.guice.test.resources;
 
-import io.tesla.dropwizard.sisu.guice.test.service.MyService;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.service.MyService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,19 +9,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 @Named
-@Path("/common-resource")
-public class CommonResource {
+@Path("/my-resource")
+public class MyResource {
 
 	private MyService myService;
 	
 	@Inject
-	public CommonResource(MyService myService) {
+	public MyResource(MyService myService) {
 		this.myService = myService;
 	}
 	
 	@GET
 	public Response doGet(){
-		return Response.ok("We have so much in common!!!").build();
+		return Response.ok("hello world!").build();
 	}
 	
 	public MyService getMyService() {
@@ -29,4 +29,3 @@ public class CommonResource {
 	}
 	
 }
-

@@ -1,4 +1,4 @@
-package io.tesla.dropwizard.sisu;
+package com.cylentsystems.dropwizard.sisu;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -7,6 +7,14 @@ import java.util.List;
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
 
+import com.codahale.metrics.health.HealthCheck;
+import io.dropwizard.Application;
+import io.dropwizard.Configuration;
+import io.dropwizard.lifecycle.Managed;
+import io.dropwizard.servlets.tasks.Task;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import io.tesla.dropwizard.sisu.SisuHealthCheck;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.BeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
@@ -16,24 +24,16 @@ import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.sun.jersey.spi.inject.InjectableProvider;
-import com.yammer.dropwizard.Service;
-import com.yammer.dropwizard.config.Bootstrap;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.config.Environment;
-import com.yammer.dropwizard.lifecycle.Managed;
-import com.yammer.dropwizard.tasks.Task;
-import com.yammer.metrics.core.HealthCheck;
 
-public abstract class SisuService<T extends Configuration> extends Service<T> {
+public abstract class SisuApplication<T extends Configuration> extends Application<T> {
 
-  private static final Logger logger = LoggerFactory.getLogger(SisuService.class);
+  private static final Logger logger = LoggerFactory.getLogger(SisuApplication.class);
 
   @Override
   public void initialize(Bootstrap<T> bootstrap) {
@@ -93,7 +93,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addManaged(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Managed> managedBeanEntry : locator.locate(Key.get(Managed.class))) {
       Managed managed = managedBeanEntry.getValue();
-      environment.manage(managed);
+      environment.lifecycle().manage(managed);
       logger.info("Added managed: " + managed);
     }
   }
@@ -101,15 +101,15 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addTasks(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Task> taskBeanEntry : locator.locate(Key.get(Task.class))) {
       Task task = taskBeanEntry.getValue();
-      environment.addTask(task);
+      environment.admin().addTask(task);
       logger.info("Added task: " + task);
     }
   }
 
   private void addHealthChecks(Environment environment, BeanLocator locator) {
-    for (BeanEntry<Annotation, HealthCheck> healthCheckBeanEntry : locator.locate(Key.get(HealthCheck.class))) {
+    for (BeanEntry<Annotation, SisuHealthCheck> healthCheckBeanEntry : locator.locate(Key.get(SisuHealthCheck.class))) {
       HealthCheck healthCheck = healthCheckBeanEntry.getValue();
-      environment.addHealthCheck(healthCheck);
+      environment.healthChecks().register(healthCheck);
       logger.info("Added healthCheck: " + healthCheck);
     }
   }
@@ -118,7 +118,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addInjectableProviders(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, InjectableProvider> injectableProviderBeanEntry : locator.locate(Key.get(InjectableProvider.class))) {
       InjectableProvider injectableProvider = injectableProviderBeanEntry.getValue();
-      environment.addProvider(injectableProvider);
+      environment.jersey().register(injectableProvider);
       logger.info("Added injectableProvider: " + injectableProvider);
     }
   }
@@ -126,7 +126,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
   private void addProviders(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Provider> providerBeanEntry : locator.locate(Key.get(Provider.class))) {
       Provider provider = providerBeanEntry.getValue();
-      environment.addProvider(provider);
+      environment.jersey().register(provider);
       logger.info("Added provider class: " + provider);
     }
   }
@@ -139,7 +139,7 @@ public abstract class SisuService<T extends Configuration> extends Service<T> {
       Class<?> impl = resourceBeanEntry.getImplementationClass();
       if (impl != null && impl.isAnnotationPresent(Path.class)) {
         Object resource = resourceBeanEntry.getValue();
-        environment.addResource(resource);
+        environment.jersey().register(resource);
         logger.info("Added resource class: " + resource);
       }
     }

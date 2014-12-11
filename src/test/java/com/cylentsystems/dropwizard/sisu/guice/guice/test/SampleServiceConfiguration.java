@@ -1,4 +1,4 @@
-package io.tesla.dropwizard.sisu.guice.test;
+package com.cylentsystems.dropwizard.sisu.guice.guice.test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yammer.dropwizard.config.Configuration;

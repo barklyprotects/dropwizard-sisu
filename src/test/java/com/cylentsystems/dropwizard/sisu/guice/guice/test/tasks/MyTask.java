@@ -1,4 +1,4 @@
-package io.tesla.dropwizard.sisu.guice.test.tasks;
+package com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks;
 
 import java.io.PrintWriter;
 

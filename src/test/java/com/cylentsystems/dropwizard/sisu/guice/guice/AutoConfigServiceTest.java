@@ -1,4 +1,4 @@
-package io.tesla.dropwizard.sisu.guice;
+package com.cylentsystems.dropwizard.sisu.guice.guice;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
@@ -8,13 +8,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import io.tesla.dropwizard.sisu.common.resources.CommonResource;
-import io.tesla.dropwizard.sisu.guice.test.MultiPackageService;
-import io.tesla.dropwizard.sisu.guice.test.SampleService;
-import io.tesla.dropwizard.sisu.guice.test.SampleServiceConfiguration;
-import io.tesla.dropwizard.sisu.guice.test.health.MyHealthCheck;
-import io.tesla.dropwizard.sisu.guice.test.resources.MyResource;
-import io.tesla.dropwizard.sisu.guice.test.tasks.MyTask;
+import com.cylentsystems.dropwizard.sisu.common.resources.CommonResource;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.MultiPackageApplication;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleServiceConfiguration;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.health.MyHealthCheck;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.resources.MyResource;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AutoConfigServiceTest {
 	
 	//@Test
 	public void itInstallsResources() throws Exception {
-		SampleService s = new SampleService();
+		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 		
 		
@@ -54,7 +54,7 @@ public class AutoConfigServiceTest {
 	
 	//@Test
 	public void itInstallsMultiPackageResources() throws Exception {
-		MultiPackageService s = new MultiPackageService();
+		MultiPackageApplication s = new MultiPackageApplication();
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<?> captor = ArgumentCaptor.forClass(Object.class);
@@ -76,7 +76,7 @@ public class AutoConfigServiceTest {
 	
 	//@Test
 	public void itWiresUpDependencies() throws Exception {
-		SampleService s = new SampleService();
+		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<MyResource> resource = ArgumentCaptor.forClass(MyResource.class);
@@ -89,7 +89,7 @@ public class AutoConfigServiceTest {
 	
 	@Test
 	public void itInstallsHealthChecks() throws Exception {
-		SampleService s = new SampleService();
+		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 
 		ArgumentCaptor<? extends HealthCheck> healthCheck = ArgumentCaptor.forClass(HealthCheck.class);
@@ -99,7 +99,7 @@ public class AutoConfigServiceTest {
 	
 	@Test
 	public void itInstallsTasks() throws Exception {
-		SampleService s = new SampleService();
+		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<? extends Task> task = ArgumentCaptor.forClass(Task.class);

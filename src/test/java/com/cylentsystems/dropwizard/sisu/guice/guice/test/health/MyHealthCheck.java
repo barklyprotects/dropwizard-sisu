@@ -1,4 +1,4 @@
-package io.tesla.dropwizard.sisu.guice.test.health;
+package com.cylentsystems.dropwizard.sisu.guice.guice.test.health;
 
 import javax.inject.Named;
 

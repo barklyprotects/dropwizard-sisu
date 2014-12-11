@@ -1,4 +1,4 @@
-package io.tesla.dropwizard.sisu.guice.test;
+package com.cylentsystems.dropwizard.sisu.guice.guice.test;
 
 import java.lang.annotation.Annotation;
 
