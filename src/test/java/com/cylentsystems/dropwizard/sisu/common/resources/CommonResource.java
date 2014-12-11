@@ -1,6 +1,6 @@
 package com.cylentsystems.dropwizard.sisu.common.resources;
 
-import io.tesla.dropwizard.sisu.guice.test.service.MyService;
+import com.cylentsystems.dropwizard.sisu.guice.guice.test.service.MyService;
 
 import javax.inject.Inject;
 import javax.inject.Named;

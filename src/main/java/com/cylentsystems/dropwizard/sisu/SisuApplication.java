@@ -14,7 +14,6 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.tesla.dropwizard.sisu.SisuHealthCheck;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.BeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
@@ -108,8 +107,8 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
 
   private void addHealthChecks(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, SisuHealthCheck> healthCheckBeanEntry : locator.locate(Key.get(SisuHealthCheck.class))) {
-      HealthCheck healthCheck = healthCheckBeanEntry.getValue();
-      environment.healthChecks().register(healthCheck);
+      SisuHealthCheck healthCheck = healthCheckBeanEntry.getValue();
+      environment.healthChecks().register(healthCheck.getName(),healthCheck);
       logger.info("Added healthCheck: " + healthCheck);
     }
   }

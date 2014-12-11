@@ -1,5 +1,5 @@
-INFO  [2013-03-17 19:24:11,524] io.tesla.dropwizard.sisu.SisuService: Added healthCheck: io.tesla.dropwizard.sisu.guice.test.health.MyHealthCheck@2dd3d39d
-INFO  [2013-03-17 19:24:11,526] io.tesla.dropwizard.sisu.SisuService: Added task: io.tesla.dropwizard.sisu.guice.test.tasks.MyTask@2bfa17b0
+INFO  [2013-03-17 19:24:11,524] com.cylentsystems.dropwizard.sisu.SisuApplication: Added healthCheck: com.cylentsystems.dropwizard.sisu.guice.guice.test.health.MyHealthCheck@2dd3d39d
+INFO  [2013-03-17 19:24:11,526] com.cylentsystems.dropwizard.sisu.SisuApplication: Added task: com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask@2bfa17b0
 INFO  [2013-03-17 19:24:11,607] com.yammer.dropwizard.cli.ServerCommand: Starting SampleService
 INFO  [2013-03-17 19:24:11,607] org.eclipse.jetty.server.Server: jetty-8.1.8.v20121106
 INFO  [2013-03-17 19:24:11,714] com.sun.jersey.server.impl.application.WebApplicationImpl: Initiating Jersey application, version 'Jersey: 1.15 10/30/2012 02:40 PM'
@@ -9,7 +9,7 @@ INFO  [2013-03-17 19:24:11,755] com.yammer.dropwizard.config.Environment:
 INFO  [2013-03-17 19:24:11,756] com.yammer.dropwizard.config.Environment: tasks = 
 
     POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
-    POST    /tasks/my-task (io.tesla.dropwizard.sisu.guice.test.tasks.MyTask)
+    POST    /tasks/my-task (com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask)
 
 ERROR [2013-03-17 19:24:11,940] com.sun.jersey.server.impl.application.RootResourceUriRules: The ResourceConfig instance does not contain any root resource classes.
 WARN  [2013-03-17 19:24:11,944] /: unavailable
@@ -50,7 +50,7 @@ WARN  [2013-03-17 19:24:11,944] /: unavailable
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 INFO  [2013-03-17 19:24:11,961] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 WARN  [2013-03-17 19:24:11,967] org.eclipse.jetty.util.component.AbstractLifeCycle: FAILED SocketConnector@0.0.0.0:8081: java.net.BindException: Address already in use
 ! java.net.BindException: Address already in use
@@ -71,7 +71,7 @@ WARN  [2013-03-17 19:24:11,967] org.eclipse.jetty.util.component.AbstractLifeCyc
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 WARN  [2013-03-17 19:24:11,967] org.eclipse.jetty.util.component.AbstractLifeCycle: FAILED org.eclipse.jetty.server.Server@62ab5e63: java.net.BindException: Address already in use
 ! java.net.BindException: Address already in use
 ! at java.net.PlainSocketImpl.socketBind(Native Method)
@@ -91,7 +91,7 @@ WARN  [2013-03-17 19:24:11,967] org.eclipse.jetty.util.component.AbstractLifeCyc
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 ERROR [2013-03-17 19:24:11,968] com.yammer.dropwizard.cli.ServerCommand: Unable to start server, shutting down
 ! java.net.BindException: Address already in use
 ! at java.net.PlainSocketImpl.socketBind(Native Method)
@@ -111,34 +111,34 @@ ERROR [2013-03-17 19:24:11,968] com.yammer.dropwizard.cli.ServerCommand: Unable 
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 INFO  [2013-03-17 19:24:11,968] org.eclipse.jetty.server.Server: Graceful shutdown SocketConnector@0.0.0.0:8081
 INFO  [2013-03-17 19:24:11,968] org.eclipse.jetty.server.Server: Graceful shutdown InstrumentedBlockingChannelConnector@0.0.0.0:8080
 INFO  [2013-03-17 19:24:11,970] org.eclipse.jetty.server.Server: Graceful shutdown o.e.j.s.ServletContextHandler{/,null}
 INFO  [2013-03-17 19:24:11,970] org.eclipse.jetty.server.Server: Graceful shutdown o.e.j.s.ServletContextHandler{/,file:/Users/jvanzyl/js/bithub-apps/dropwizard-sisu/target/test-classes/}
 INFO  [2013-03-17 19:24:13,971] org.eclipse.jetty.server.handler.ContextHandler: stopped o.e.j.s.ServletContextHandler{/,file:/Users/jvanzyl/js/bithub-apps/dropwizard-sisu/target/test-classes/}
 INFO  [2013-03-17 19:24:13,972] org.eclipse.jetty.server.handler.ContextHandler: stopped o.e.j.s.ServletContextHandler{/,null}
-INFO  [2013-03-17 19:29:09,700] io.tesla.dropwizard.sisu.SisuService: Added healthCheck: io.tesla.dropwizard.sisu.guice.test.health.MyHealthCheck@6f2d3391
-INFO  [2013-03-17 19:34:52,489] io.tesla.dropwizard.sisu.SisuService: Added healthCheck: io.tesla.dropwizard.sisu.guice.test.health.MyHealthCheck@6f2d3391
-INFO  [2013-03-17 19:34:52,491] io.tesla.dropwizard.sisu.SisuService: Added resource class: io.tesla.dropwizard.sisu.common.resources.CommonResource@bb12f41
-INFO  [2013-03-17 19:34:52,491] io.tesla.dropwizard.sisu.SisuService: Added resource class: io.tesla.dropwizard.sisu.guice.test.health.MyHealthCheck@2a120c88
-INFO  [2013-03-17 19:34:52,491] io.tesla.dropwizard.sisu.SisuService: Added resource class: io.tesla.dropwizard.sisu.guice.test.resources.MyResource@7ab2ba47
-INFO  [2013-03-17 19:34:52,493] io.tesla.dropwizard.sisu.SisuService: Added resource class: io.tesla.dropwizard.sisu.guice.test.service.MyOtherService@37ffe4f3
-INFO  [2013-03-17 19:34:52,493] io.tesla.dropwizard.sisu.SisuService: Added resource class: io.tesla.dropwizard.sisu.guice.test.service.MyService@202f054f
-INFO  [2013-03-17 19:34:52,493] io.tesla.dropwizard.sisu.SisuService: Added resource class: io.tesla.dropwizard.sisu.guice.test.tasks.MyTask@1410d645
-INFO  [2013-03-17 19:34:52,493] io.tesla.dropwizard.sisu.SisuService: Added task: io.tesla.dropwizard.sisu.guice.test.tasks.MyTask@5aa6da2
+INFO  [2013-03-17 19:29:09,700] com.cylentsystems.dropwizard.sisu.SisuApplication: Added healthCheck: com.cylentsystems.dropwizard.sisu.guice.guice.test.health.MyHealthCheck@6f2d3391
+INFO  [2013-03-17 19:34:52,489] com.cylentsystems.dropwizard.sisu.SisuApplication: Added healthCheck: com.cylentsystems.dropwizard.sisu.guice.guice.test.health.MyHealthCheck@6f2d3391
+INFO  [2013-03-17 19:34:52,491] com.cylentsystems.dropwizard.sisu.SisuApplication: Added resource class: com.cylentsystems.dropwizard.sisu.common.resources.CommonResource@bb12f41
+INFO  [2013-03-17 19:34:52,491] com.cylentsystems.dropwizard.sisu.SisuApplication: Added resource class: com.cylentsystems.dropwizard.sisu.guice.guice.test.health.MyHealthCheck@2a120c88
+INFO  [2013-03-17 19:34:52,491] com.cylentsystems.dropwizard.sisu.SisuApplication: Added resource class: com.cylentsystems.dropwizard.sisu.guice.guice.test.resources.MyResource@7ab2ba47
+INFO  [2013-03-17 19:34:52,493] com.cylentsystems.dropwizard.sisu.SisuApplication: Added resource class: com.cylentsystems.dropwizard.sisu.guice.guice.test.service.MyOtherService@37ffe4f3
+INFO  [2013-03-17 19:34:52,493] com.cylentsystems.dropwizard.sisu.SisuApplication: Added resource class: com.cylentsystems.dropwizard.sisu.guice.guice.test.service.MyService@202f054f
+INFO  [2013-03-17 19:34:52,493] com.cylentsystems.dropwizard.sisu.SisuApplication: Added resource class: com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask@1410d645
+INFO  [2013-03-17 19:34:52,493] com.cylentsystems.dropwizard.sisu.SisuApplication: Added task: com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask@5aa6da2
 INFO  [2013-03-17 19:34:52,569] com.yammer.dropwizard.cli.ServerCommand: Starting SampleService
 INFO  [2013-03-17 19:34:52,570] org.eclipse.jetty.server.Server: jetty-8.1.8.v20121106
 INFO  [2013-03-17 19:34:52,663] com.sun.jersey.server.impl.application.WebApplicationImpl: Initiating Jersey application, version 'Jersey: 1.15 10/30/2012 02:40 PM'
 INFO  [2013-03-17 19:34:52,703] com.yammer.dropwizard.config.Environment: 
 
-    GET     common-resource (io.tesla.dropwizard.sisu.common.resources.CommonResource)
-    GET     my-resource (io.tesla.dropwizard.sisu.guice.test.resources.MyResource)
+    GET     common-resource (com.cylentsystems.dropwizard.sisu.common.resources.CommonResource)
+    GET     my-resource (com.cylentsystems.dropwizard.sisu.guice.guice.test.resources.MyResource)
 
 INFO  [2013-03-17 19:34:52,703] com.yammer.dropwizard.config.Environment: tasks = 
 
     POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
-    POST    /tasks/my-task (io.tesla.dropwizard.sisu.guice.test.tasks.MyTask)
+    POST    /tasks/my-task (com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask)
 
 INFO  [2013-03-17 19:34:52,916] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 WARN  [2013-03-17 19:34:52,925] org.eclipse.jetty.util.component.AbstractLifeCycle: FAILED SocketConnector@0.0.0.0:8081: java.net.BindException: Address already in use
@@ -160,7 +160,7 @@ WARN  [2013-03-17 19:34:52,925] org.eclipse.jetty.util.component.AbstractLifeCyc
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 WARN  [2013-03-17 19:34:52,926] org.eclipse.jetty.util.component.AbstractLifeCycle: FAILED org.eclipse.jetty.server.Server@1b28cff: java.net.BindException: Address already in use
 ! java.net.BindException: Address already in use
 ! at java.net.PlainSocketImpl.socketBind(Native Method)
@@ -180,7 +180,7 @@ WARN  [2013-03-17 19:34:52,926] org.eclipse.jetty.util.component.AbstractLifeCyc
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 ERROR [2013-03-17 19:34:52,926] com.yammer.dropwizard.cli.ServerCommand: Unable to start server, shutting down
 ! java.net.BindException: Address already in use
 ! at java.net.PlainSocketImpl.socketBind(Native Method)
@@ -200,7 +200,7 @@ ERROR [2013-03-17 19:34:52,926] com.yammer.dropwizard.cli.ServerCommand: Unable 
 ! at com.yammer.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:58)
 ! at com.yammer.dropwizard.cli.Cli.run(Cli.java:53)
 ! at com.yammer.dropwizard.Service.run(Service.java:61)
-! at io.tesla.dropwizard.sisu.guice.test.SampleService.main(SampleService.java:7)
+! at com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication.main(SampleService.java:7)
 INFO  [2013-03-17 19:34:52,926] org.eclipse.jetty.server.Server: Graceful shutdown SocketConnector@0.0.0.0:8081
 INFO  [2013-03-17 19:34:52,926] org.eclipse.jetty.server.Server: Graceful shutdown InstrumentedBlockingChannelConnector@0.0.0.0:8080
 INFO  [2013-03-17 19:34:52,927] org.eclipse.jetty.server.Server: Graceful shutdown o.e.j.s.ServletContextHandler{/,null}

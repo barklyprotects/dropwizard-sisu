@@ -1,11 +1,10 @@
 package com.cylentsystems.dropwizard.sisu.guice.guice.test.health;
 
+import com.cylentsystems.dropwizard.sisu.SisuHealthCheck;
 import javax.inject.Named;
 
-import com.yammer.metrics.core.HealthCheck;
-
 @Named
-public class MyHealthCheck extends HealthCheck {
+public class MyHealthCheck extends SisuHealthCheck {
 
 	public MyHealthCheck() {
 		super("my-health");

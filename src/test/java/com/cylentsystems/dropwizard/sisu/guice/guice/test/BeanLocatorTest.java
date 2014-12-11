@@ -4,13 +4,13 @@ import java.lang.annotation.Annotation;
 
 import javax.inject.Inject;
 
+import io.dropwizard.servlets.tasks.Task;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.BeanLocator;
 import org.eclipse.sisu.launch.InjectedTest;
 import org.junit.Test;
-
 import com.google.inject.Key;
-import com.yammer.dropwizard.tasks.Task;
+
 
 public class BeanLocatorTest extends InjectedTest {
 

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import javax.inject.Named;
 
 import com.google.common.collect.ImmutableMultimap;
-import com.yammer.dropwizard.tasks.Task;
+import io.dropwizard.servlets.tasks.Task;
 
 @Named
 public class MyTask extends Task {

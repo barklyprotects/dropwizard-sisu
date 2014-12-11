@@ -8,6 +8,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import com.cylentsystems.dropwizard.sisu.SisuHealthCheck;
 import com.cylentsystems.dropwizard.sisu.common.resources.CommonResource;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.MultiPackageApplication;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication;
@@ -20,15 +22,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.dropwizard.servlets.tasks.Task;
+import io.dropwizard.setup.Environment;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import com.yammer.dropwizard.config.Environment;
-import com.yammer.dropwizard.tasks.Task;
-import com.yammer.metrics.core.HealthCheck;
 
 
 public class AutoConfigServiceTest {
@@ -48,7 +48,7 @@ public class AutoConfigServiceTest {
 		
 		
 		ArgumentCaptor<MyResource> resource = ArgumentCaptor.forClass(MyResource.class);
-		verify(environment).addResource(resource.capture());
+		verify(environment).jersey().register(resource.capture());
 		assertThat(resource.getValue(), is(MyResource.class));
 	}
 	
@@ -58,7 +58,7 @@ public class AutoConfigServiceTest {
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<?> captor = ArgumentCaptor.forClass(Object.class);
-		verify(environment, times(2)).addResource(captor.capture());
+		verify(environment, times(2)).jersey().register(captor.capture());
 		
 		List<?> values = captor.getAllValues();
 		assertEquals(2, values.size());
@@ -80,7 +80,7 @@ public class AutoConfigServiceTest {
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<MyResource> resource = ArgumentCaptor.forClass(MyResource.class);
-		verify(environment).addResource(resource.capture());
+		verify(environment).jersey().register(resource.capture());
 		
 		MyResource r = resource.getValue();
 		assertThat(r.getMyService(), not(nullValue()));
@@ -92,8 +92,8 @@ public class AutoConfigServiceTest {
 		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 
-		ArgumentCaptor<? extends HealthCheck> healthCheck = ArgumentCaptor.forClass(HealthCheck.class);
-		verify(environment).addHealthCheck(healthCheck.capture());
+		ArgumentCaptor<? extends SisuHealthCheck> healthCheck = ArgumentCaptor.forClass(SisuHealthCheck.class);
+		verify(environment).healthChecks().register(healthCheck.capture().getName(),healthCheck.capture());
 		assertThat(healthCheck.getValue(), is(MyHealthCheck.class));
 	}
 	
@@ -103,7 +103,7 @@ public class AutoConfigServiceTest {
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<? extends Task> task = ArgumentCaptor.forClass(Task.class);
-		verify(environment).addTask(task.capture());
+		verify(environment).admin().addTask(task.capture());
 		assertThat(task.getValue(), is(MyTask.class));
 	}
 }
