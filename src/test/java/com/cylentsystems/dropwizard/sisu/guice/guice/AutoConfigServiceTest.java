@@ -6,9 +6,9 @@ import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
+import com.codahale.metrics.health.HealthCheckRegistry;
 import com.cylentsystems.dropwizard.sisu.SisuHealthCheck;
 import com.cylentsystems.dropwizard.sisu.common.resources.CommonResource;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.MultiPackageApplication;
@@ -22,7 +22,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.servlets.tasks.Task;
+import io.dropwizard.setup.AdminEnvironment;
 import io.dropwizard.setup.Environment;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,30 +37,36 @@ public class AutoConfigServiceTest {
 
 	@Mock private SampleServiceConfiguration configuration;
 	@Mock private Environment environment;
+    @Mock private JerseyEnvironment jersey;
+    @Mock private HealthCheckRegistry healthCheckRegistry;
+    @Mock private AdminEnvironment adminEnvironment;
 	
 	@Before
 	public void initMocks() {
 		MockitoAnnotations.initMocks(this);
+        when(environment.jersey()).thenReturn(jersey);
+        when(environment.admin()).thenReturn(adminEnvironment);
+        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
 	}
 	
-	//@Test
+	@Test
 	public void itInstallsResources() throws Exception {
 		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 		
 		
 		ArgumentCaptor<MyResource> resource = ArgumentCaptor.forClass(MyResource.class);
-		verify(environment).jersey().register(resource.capture());
+		verify(environment.jersey(), times(2)).register(resource.capture());
 		assertThat(resource.getValue(), is(MyResource.class));
 	}
 	
-	//@Test
+	@Test
 	public void itInstallsMultiPackageResources() throws Exception {
 		MultiPackageApplication s = new MultiPackageApplication();
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<?> captor = ArgumentCaptor.forClass(Object.class);
-		verify(environment, times(2)).jersey().register(captor.capture());
+		verify(environment.jersey(), times(2)).register(captor.capture());
 		
 		List<?> values = captor.getAllValues();
 		assertEquals(2, values.size());
@@ -74,28 +82,29 @@ public class AutoConfigServiceTest {
 	  assertTrue(expectedResults.isEmpty());
 	}
 	
-	//@Test
+	@Test
 	public void itWiresUpDependencies() throws Exception {
 		SampleApplication s = new SampleApplication();
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<MyResource> resource = ArgumentCaptor.forClass(MyResource.class);
-		verify(environment).jersey().register(resource.capture());
+		verify(environment.jersey(),times(2)).register(resource.capture());
 		
 		MyResource r = resource.getValue();
 		assertThat(r.getMyService(), not(nullValue()));
 		assertThat(r.getMyService().getMyOtherService(), not(nullValue()));
 	}
-	
-	@Test
-	public void itInstallsHealthChecks() throws Exception {
-		SampleApplication s = new SampleApplication();
-		s.run(configuration, environment);
 
-		ArgumentCaptor<? extends SisuHealthCheck> healthCheck = ArgumentCaptor.forClass(SisuHealthCheck.class);
-		verify(environment).healthChecks().register(healthCheck.capture().getName(),healthCheck.capture());
-		assertThat(healthCheck.getValue(), is(MyHealthCheck.class));
-	}
+    @Test
+    public void isInstallsHealthCheck() throws Exception {
+
+        SampleApplication s = new SampleApplication();
+        s.run(configuration,environment);
+
+        ArgumentCaptor<? extends SisuHealthCheck> healthCheck = ArgumentCaptor.forClass(SisuHealthCheck.class);
+        verify(environment.healthChecks()).register(eq("my-health"),healthCheck.capture());
+        assertThat(healthCheck.getValue(),is(SisuHealthCheck.class));
+    }
 	
 	@Test
 	public void itInstallsTasks() throws Exception {
@@ -103,7 +112,7 @@ public class AutoConfigServiceTest {
 		s.run(configuration, environment);
 		
 		ArgumentCaptor<? extends Task> task = ArgumentCaptor.forClass(Task.class);
-		verify(environment).admin().addTask(task.capture());
+		verify(environment.admin()).addTask(task.capture());
 		assertThat(task.getValue(), is(MyTask.class));
 	}
 }
