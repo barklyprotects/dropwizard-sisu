@@ -1,5 +1,6 @@
 package com.cylentsystems.dropwizard.sisu.guice.guice;
 
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -14,7 +15,6 @@ import com.cylentsystems.dropwizard.sisu.common.resources.CommonResource;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.MultiPackageApplication;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleApplication;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.SampleServiceConfiguration;
-import com.cylentsystems.dropwizard.sisu.guice.guice.test.health.MyHealthCheck;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.resources.MyResource;
 import com.cylentsystems.dropwizard.sisu.guice.guice.test.tasks.MyTask;
 
@@ -57,7 +57,7 @@ public class AutoConfigServiceTest {
 		
 		ArgumentCaptor<MyResource> resource = ArgumentCaptor.forClass(MyResource.class);
 		verify(environment.jersey(), times(2)).register(resource.capture());
-		assertThat(resource.getValue(), is(MyResource.class));
+		assertThat(resource.getValue(), is(instanceOf(MyResource.class)));
 	}
 	
 	@Test
@@ -103,7 +103,7 @@ public class AutoConfigServiceTest {
 
         ArgumentCaptor<? extends SisuHealthCheck> healthCheck = ArgumentCaptor.forClass(SisuHealthCheck.class);
         verify(environment.healthChecks()).register(eq("my-health"),healthCheck.capture());
-        assertThat(healthCheck.getValue(),is(SisuHealthCheck.class));
+        assertThat(healthCheck.getValue(),is(instanceOf(SisuHealthCheck.class)));
     }
 	
 	@Test
@@ -113,6 +113,6 @@ public class AutoConfigServiceTest {
 		
 		ArgumentCaptor<? extends Task> task = ArgumentCaptor.forClass(Task.class);
 		verify(environment.admin()).addTask(task.capture());
-		assertThat(task.getValue(), is(MyTask.class));
+		assertThat(task.getValue(), is(instanceOf(MyTask.class)));
 	}
 }
