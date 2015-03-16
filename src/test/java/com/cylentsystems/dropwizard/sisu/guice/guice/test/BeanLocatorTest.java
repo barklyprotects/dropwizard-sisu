@@ -1,10 +1,9 @@
 package com.cylentsystems.dropwizard.sisu.guice.guice.test;
 
 import java.lang.annotation.Annotation;
-
 import javax.inject.Inject;
-
 import io.dropwizard.servlets.tasks.Task;
+
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.BeanLocator;
 import org.eclipse.sisu.launch.InjectedTest;
