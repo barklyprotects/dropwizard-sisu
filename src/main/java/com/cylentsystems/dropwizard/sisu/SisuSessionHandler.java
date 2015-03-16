@@ -11,5 +11,6 @@ import org.eclipse.jetty.server.session.SessionHandler;
  * *****************************************************************************
  */
 public class SisuSessionHandler extends SessionHandler {
-    protected SessionHandler get(){ return null;}
+
+    protected SessionHandler get(){ return  this;}
 }

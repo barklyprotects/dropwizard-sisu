@@ -90,6 +90,7 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
   }
 
     private void addSessionHandler(Environment environment, BeanLocator locator) {
+        if(environment.servlets()==null) return;
         for (BeanEntry<Annotation, SisuSessionHandler> managedBeanEntry : locator.locate(Key.get(SisuSessionHandler.class))) {
             SisuSessionHandler sessionHandler = managedBeanEntry.getValue();
             environment.servlets().setSessionHandler(sessionHandler);
