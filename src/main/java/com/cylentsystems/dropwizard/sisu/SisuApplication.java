@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
-
-import com.codahale.metrics.health.HealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.lifecycle.Managed;
@@ -32,7 +30,8 @@ import com.sun.jersey.spi.inject.InjectableProvider;
 
 public abstract class SisuApplication<T extends Configuration> extends Application<T> {
 
-  private static final Logger logger = LoggerFactory.getLogger(SisuApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(SisuApplication.class);
+    private Injector injector;
 
   @Override
   public void initialize(Bootstrap<T> bootstrap) {
@@ -41,7 +40,7 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
   @Override
   public void run(T configuration, Environment environment)
       throws Exception {
-    Injector injector = createInjector(configuration, environment);
+    this.injector = createInjector(configuration, environment);
     injector.injectMembers(this);
     runWithInjector(configuration, environment, injector);
   }
@@ -71,10 +70,10 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     return new Module[] {};
   }
 
-  protected void customize(T configuration, Environment environment) {
-  }
+  protected void customize(T configuration, Environment environment) {}
 
-  private void runWithInjector(T configuration, Environment environment, Injector injector)
+
+    private void runWithInjector(T configuration, Environment environment, Injector injector)
       throws Exception {
     //
     // Allow customization of the environment
@@ -87,9 +86,19 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     addResources(environment, locator);
     addTasks(environment, locator);
     addManaged(environment, locator);
+        addSessionHandler(environment,locator);
   }
 
-  private void addManaged(Environment environment, BeanLocator locator) {
+    private void addSessionHandler(Environment environment, BeanLocator locator) {
+        if(environment.servlets()==null) return;
+        for (BeanEntry<Annotation, SisuSessionHandler> managedBeanEntry : locator.locate(Key.get(SisuSessionHandler.class))) {
+            SisuSessionHandler sessionHandler = managedBeanEntry.getValue();
+            environment.servlets().setSessionHandler(sessionHandler);
+            logger.info("Added servlet session handler: " + sessionHandler);
+        }
+    }
+
+    private void addManaged(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Managed> managedBeanEntry : locator.locate(Key.get(Managed.class))) {
       Managed managed = managedBeanEntry.getValue();
       environment.lifecycle().manage(managed);
