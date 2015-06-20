@@ -26,7 +26,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
-import com.sun.jersey.spi.inject.InjectableProvider;
 
 public abstract class SisuApplication<T extends Configuration> extends Application<T> {
 
@@ -82,7 +81,6 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     BeanLocator locator = injector.getInstance(BeanLocator.class);
     addHealthChecks(environment, locator);
     addProviders(environment, locator);
-    addInjectableProviders(environment, locator);
     addResources(environment, locator);
     addTasks(environment, locator);
     addManaged(environment, locator);
@@ -122,14 +120,6 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     }
   }
 
-  @SuppressWarnings("rawtypes")
-  private void addInjectableProviders(Environment environment, BeanLocator locator) {
-    for (BeanEntry<Annotation, InjectableProvider> injectableProviderBeanEntry : locator.locate(Key.get(InjectableProvider.class))) {
-      InjectableProvider injectableProvider = injectableProviderBeanEntry.getValue();
-      environment.jersey().register(injectableProvider);
-      logger.info("Added injectableProvider: " + injectableProvider);
-    }
-  }
 
   private void addProviders(Environment environment, BeanLocator locator) {
     for (BeanEntry<Annotation, Provider> providerBeanEntry : locator.locate(Key.get(Provider.class))) {
