@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
+
+import com.cylentsystems.dropwizard.sisu.bundles.AtmosphereBundle;
+import com.cylentsystems.dropwizard.sisu.bundles.Websocket;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.lifecycle.Managed;
@@ -34,6 +37,7 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
 
   @Override
   public void initialize(Bootstrap<T> bootstrap) {
+    bootstrap.addBundle(new AtmosphereBundle());
   }
 
   @Override
@@ -84,7 +88,8 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     addResources(environment, locator);
     addTasks(environment, locator);
     addManaged(environment, locator);
-        addSessionHandler(environment,locator);
+    addSessionHandler(environment,locator);
+
   }
 
     private void addSessionHandler(Environment environment, BeanLocator locator) {
@@ -135,7 +140,7 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     //
     for (BeanEntry<Annotation, Object> resourceBeanEntry : locator.locate(Key.get(Object.class))) {
       Class<?> impl = resourceBeanEntry.getImplementationClass();
-      if (impl != null && impl.isAnnotationPresent(Path.class)) {
+      if (impl != null && impl.isAnnotationPresent(Path.class) && !impl.isAnnotationPresent(Websocket.class)) {
         Object resource = resourceBeanEntry.getValue();
         environment.jersey().register(resource);
         logger.info("Added resource class: " + resource);
