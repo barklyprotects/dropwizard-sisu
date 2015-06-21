@@ -1,4 +1,4 @@
-package com.cylentsystems.dropwizard.sisu.bundles;
+package com.cylentsystems.dropwizard.sisu;
 
 /**
  * *****************************************************************************

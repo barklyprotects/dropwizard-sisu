@@ -8,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
 
 import com.cylentsystems.dropwizard.sisu.bundles.AtmosphereBundle;
-import com.cylentsystems.dropwizard.sisu.bundles.Websocket;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.lifecycle.Managed;
