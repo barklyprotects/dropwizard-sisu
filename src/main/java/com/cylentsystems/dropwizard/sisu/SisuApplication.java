@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.Provider;
-
-import com.cylentsystems.dropwizard.sisu.bundles.AtmosphereBundle;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.lifecycle.Managed;
@@ -35,9 +33,8 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     private Injector injector;
 
   @Override
-  public void initialize(Bootstrap<T> bootstrap) {
-    bootstrap.addBundle(new AtmosphereBundle());
-  }
+  public void initialize(Bootstrap<T> bootstrap){}
+
 
   @Override
   public void run(T configuration, Environment environment)
