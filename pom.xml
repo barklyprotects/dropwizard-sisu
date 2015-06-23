@@ -36,12 +36,12 @@
     <dependency>
       <groupId>org.eclipse.sisu</groupId>
       <artifactId>org.eclipse.sisu.inject</artifactId>
-      <version>0.3.0</version>
+      <version>0.3.1</version>
     </dependency>
       <dependency>
           <groupId>io.dropwizard</groupId>
           <artifactId>dropwizard-core</artifactId>
-          <version>0.7.1</version>
+          <version>0.8.1</version>
       </dependency>
       <dependency>
       <groupId>org.sonatype.sisu</groupId>
