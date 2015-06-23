@@ -33,8 +33,8 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     private Injector injector;
 
   @Override
-  public void initialize(Bootstrap<T> bootstrap) {
-  }
+  public void initialize(Bootstrap<T> bootstrap){}
+
 
   @Override
   public void run(T configuration, Environment environment)
@@ -84,7 +84,8 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     addResources(environment, locator);
     addTasks(environment, locator);
     addManaged(environment, locator);
-        addSessionHandler(environment,locator);
+    addSessionHandler(environment,locator);
+
   }
 
     private void addSessionHandler(Environment environment, BeanLocator locator) {
@@ -135,7 +136,7 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
     //
     for (BeanEntry<Annotation, Object> resourceBeanEntry : locator.locate(Key.get(Object.class))) {
       Class<?> impl = resourceBeanEntry.getImplementationClass();
-      if (impl != null && impl.isAnnotationPresent(Path.class)) {
+      if (impl != null && impl.isAnnotationPresent(Path.class) && !impl.isAnnotationPresent(Websocket.class)) {
         Object resource = resourceBeanEntry.getValue();
         environment.jersey().register(resource);
         logger.info("Added resource class: " + resource);
