@@ -1,5 +1,8 @@
 package com.cylentsystems.dropwizard.sisu;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * *****************************************************************************
  * Copyright (c) 2014
@@ -8,5 +11,6 @@ package com.cylentsystems.dropwizard.sisu;
  * Cylent Systems - initial API and implementation
  * *****************************************************************************
  */
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Websocket {
 }

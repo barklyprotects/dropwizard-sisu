@@ -71,6 +71,10 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
 
   protected void customize(T configuration, Environment environment) {}
 
+    protected Injector getInjector() {
+        return this.injector;
+    }
+
 
     private void runWithInjector(T configuration, Environment environment, Injector injector)
       throws Exception {
