@@ -1,17 +1,13 @@
 package com.barkly.dropwizard.sisu;
 
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ws.rs.Path;
-import javax.ws.rs.ext.Provider;
+import com.google.inject.*;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.BeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
@@ -21,11 +17,11 @@ import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.inject.Binder;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Module;
+import javax.ws.rs.Path;
+import javax.ws.rs.ext.Provider;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class SisuApplication<T extends Configuration> extends Application<T> {
 
@@ -78,26 +74,26 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
 
     private void runWithInjector(T configuration, Environment environment, Injector injector)
       throws Exception {
-    //
-    // Allow customization of the environment
-    //
-    customize(configuration, environment);
-    BeanLocator locator = injector.getInstance(BeanLocator.class);
-    addHealthChecks(environment, locator);
-    addProviders(environment, locator);
-    addResources(environment, locator);
-    addTasks(environment, locator);
-    addManaged(environment, locator);
-    addSessionHandler(environment,locator);
+      //
+      // Allow customization of the environment
+      //
+      customize(configuration, environment);
+      BeanLocator locator = injector.getInstance(BeanLocator.class);
+      addHealthChecks(environment, locator);
+      addProviders(environment, locator);
+      addResources(environment, locator);
+      addTasks(environment, locator);
+      addManaged(environment, locator);
+      addServerLifecycleListener(environment, locator);
 
-  }
+    }
 
-    private void addSessionHandler(Environment environment, BeanLocator locator) {
+    private void addServerLifecycleListener(Environment environment, BeanLocator locator) {
         if(environment.servlets()==null) return;
-        for (BeanEntry<Annotation, SisuSessionHandler> managedBeanEntry : locator.locate(Key.get(SisuSessionHandler.class))) {
-            SisuSessionHandler sessionHandler = managedBeanEntry.getValue();
-            environment.servlets().setSessionHandler(sessionHandler);
-            logger.info("Added servlet session handler: " + sessionHandler);
+        for (BeanEntry<Annotation, AbstractLifeCycle.AbstractLifeCycleListener> managedBeanEntry : locator.locate(Key.get(AbstractLifeCycle.AbstractLifeCycleListener.class))) {
+            AbstractLifeCycle.AbstractLifeCycleListener lifecycleListener = managedBeanEntry.getValue();
+            environment.lifecycle().addLifeCycleListener(lifecycleListener);
+            logger.info("Added server lifecycle listener: " + lifecycleListener);
         }
     }
 
