@@ -83,13 +83,13 @@
     <snapshotRepository>
       <id>cylent-nexus</id>
       <name>cylent nexus</name>
-      <url>https://nexus.barklyprotects.com/content/repositories/snapshots</url>
+      <url>https://nexus.barklyprotects.com/repository/snapshots</url>
     </snapshotRepository>
     <!-- Publish the versioned releases here -->
     <repository>
       <id>cylent-nexus</id>
       <name>cylent nexus</name>
-      <url>https://nexus.barklyprotects.com/content/repositories/releases</url>
+      <url>https://nexus.barklyprotects.com/repository/releases</url>
     </repository>
   </distributionManagement>
 </project>
