@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.barkly</groupId>
   <artifactId>dropwizard-sisu</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
 
   <name>Sisu Extensions for Dropwizard</name>
   <description>Simple library for using Sisu in a dropwizard app.</description>
@@ -23,7 +23,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jetty.version>9.2.9.v20150224</jetty.version>
+    <jetty.version>9.4.2.v20170220</jetty.version>
   </properties>
 
   <dependencies>
@@ -42,17 +42,17 @@
     <dependency>
       <groupId>org.eclipse.sisu</groupId>
       <artifactId>org.eclipse.sisu.inject</artifactId>
-      <version>0.3.1</version>
+      <version>0.3.3</version>
     </dependency>
-      <dependency>
-          <groupId>io.dropwizard</groupId>
-          <artifactId>dropwizard-core</artifactId>
-          <version>0.8.1</version>
-      </dependency>
-      <dependency>
-      <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-guice</artifactId>
-      <version>3.2.5</version>
+    <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-core</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.sonatype.sisu</groupId>
+        <artifactId>sisu-guice</artifactId>
+        <version>3.2.6</version>
     </dependency>
     <dependency>
       <groupId>javax.inject</groupId>
