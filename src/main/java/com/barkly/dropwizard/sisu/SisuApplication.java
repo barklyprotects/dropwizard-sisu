@@ -43,15 +43,15 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
   private Injector createInjector(final T configuration, final Environment environment) {
     ClassSpace space = new URLClassSpace(getClass().getClassLoader());
     SpaceModule spaceModule = new SpaceModule(space, BeanScanning.CACHE);
-    List<Module> modules = new ArrayList<Module>();
+    List<com.google.inject.Module> modules = new ArrayList<>();
     modules.add(spaceModule);
-    modules.add(new Module() {
+    modules.add(new com.google.inject.Module() {
       public void configure(Binder binder) {
         binder.bind(Environment.class).toInstance(environment);
       }
     });
 
-    for (Module m : modules(configuration)) {
+    for (com.google.inject.Module m : modules(configuration)) {
       System.out.println("Adding " + m);
       modules.add(m);
     }
@@ -61,8 +61,8 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
   //
   // Allow the application to customize the modules
   //
-  protected Module[] modules(T configuration) {
-    return new Module[] {};
+  protected com.google.inject.Module[] modules(T configuration) {
+    return new com.google.inject.Module[] {};
   }
 
   protected void customize(T configuration, Environment environment) {}
