@@ -43,7 +43,7 @@ public abstract class SisuApplication<T extends Configuration> extends Applicati
   private Injector createInjector(final T configuration, final Environment environment) {
     ClassSpace space = new URLClassSpace(getClass().getClassLoader());
     SpaceModule spaceModule = new SpaceModule(space, BeanScanning.CACHE);
-    List<com.google.inject.Module> modules = new ArrayList<>();
+    List<com.google.inject.Module> modules = new ArrayList<com.google.inject.Module>();
     modules.add(spaceModule);
     modules.add(new com.google.inject.Module() {
       public void configure(Binder binder) {
